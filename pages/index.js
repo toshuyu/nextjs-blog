@@ -2,10 +2,11 @@ import Head from 'next/head'
 import Layout, { siteTitle } from '../components/layout'
 import utilStyles from '../styles/utils.module.css'
 import { getSortedPostsData } from '../lib/posts'
+import Link from 'next/link'
 
 export async function getStaticProps() {
   const allPostsData = await getSortedPostsData();
-  console.log('QQQQ', allPostsData);
+  console.log('data is:', allPostsData);
   return {
     props: {
       allPostsData
@@ -32,7 +33,9 @@ export default function Home({ allPostsData }) {
         <ul className={utilStyles.list}>
           {allPostsData.map(({ id, name, remark, price }) => (
             <li className={utilStyles.listItem} key={id}>
-              {id} - {name} - {remark} - {price}
+              <Link href={`/posts/${id}`}>
+                <a>{id} - {name} - {remark} - {price}</a>
+              </Link>
             </li>
           ))}
         </ul>
